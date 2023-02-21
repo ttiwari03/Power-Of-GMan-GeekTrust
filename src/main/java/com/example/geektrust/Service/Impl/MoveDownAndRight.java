@@ -1,0 +1,40 @@
+package com.example.geektrust.Service.Impl;
+
+import com.example.geektrust.Entity.Direction;
+import com.example.geektrust.Entity.GMan;
+import com.example.geektrust.Entity.Position;
+import com.example.geektrust.Exception.NotEnoughPowerException;
+import com.example.geektrust.Service.MovementService;
+
+public class MoveDownAndRight extends MovementService {
+  private final GMan gMan;
+  
+  public MoveDownAndRight(GMan gMan) {
+    super(gMan);
+    this.gMan = gMan;
+  }
+  
+  @Override
+  public void move(Position destination) throws NotEnoughPowerException {
+    Direction currentDirection = gMan.getDirection();
+    if (currentDirection.equals(Direction.EAST)) {
+      super.moveOnXAxis(destination);
+      super.turn(false);
+      super.moveOnYAxis(destination);
+    } else if (currentDirection.equals(Direction.SOUTH)) {
+      super.moveOnYAxis(destination);
+      super.turn(true);
+      super.moveOnXAxis(destination);
+    } else if (currentDirection.equals(Direction.NORTH)) {
+      super.turn(false);
+      super.moveOnXAxis(destination);
+      super.turn(false);
+      super.moveOnYAxis(destination);
+    } else {
+      super.turn(true);
+      super.moveOnYAxis(destination);
+      super.turn(true);
+      super.moveOnXAxis(destination);
+    }
+  }
+}
